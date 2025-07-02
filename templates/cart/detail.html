@@ -1,0 +1,51 @@
+{% load static %}
+{% include "store/partials/navbar.html" %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Cart</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2>Your Cart</h2>
+        {% if cart %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>Rs. {{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>Rs. {{ item.total_price }}</td>
+                    <td><a href="{% url 'cart_remove' item.product.id %}" class="btn btn-danger btn-sm">Remove</a></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3"><strong>Total</strong></td>
+                    <td colspan="2"><strong>Rs. {{ cart.get_total_price }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- ✅ Proceed to Checkout Button -->
+        <div class="text-end mt-4">
+            <a href="{% url 'checkout' %}" class="btn btn-success btn-lg">Proceed to Checkout</a>
+        </div>
+        {% else %}
+        <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

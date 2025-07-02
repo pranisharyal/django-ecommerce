@@ -1,0 +1,32 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>📦 Admin Orders Dashboard</h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.name }}</td>
+                <td>{{ order.status|title }}</td>
+                <td>Rs. {{ order.total_price }}</td>
+                <td>{{ order.created_at|date:"M d, Y" }}</td>
+                <td>
+                    <a href="{% url 'admin_order_detail' order.id %}" class="btn btn-sm btn-primary">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

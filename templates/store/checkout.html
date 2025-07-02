@@ -1,0 +1,37 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">🛒 Checkout</h2>
+
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.as_p }}
+            </div>
+
+            <div class="col-md-6">
+                <h4>🛍️ Order Summary</h4>
+                <ul class="list-group mb-3">
+                    {% for item in cart %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        {{ item.product.name }} × {{ item.quantity }}
+                        <span>Rs. {{ item.total_price }}</span>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item">Cart is empty.</li>
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Total</strong>
+                        <strong>Rs. {{ cart.get_total_price }}</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg mt-3 w-100">✅ Place Order</button>
+    </form>
+</div>
+{% endblock %}

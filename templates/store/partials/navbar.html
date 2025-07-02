@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">🛒 E-commerce</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/cart/" class="nav-link">🛒 Cart</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item d-flex align-items-center">
+                    <a class="nav-link" href="{% url 'my_orders' %}">📦 My Orders</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Hi, {{ user.username }}</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <form method="POST" action="{% url 'logout' %}" class="m-0 p-0">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav-link p-0"
+                            style="color: rgba(255,255,255,.55); text-decoration: none;">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
