@@ -11,6 +11,7 @@ from cart.cart import Cart
 from django.shortcuts import render
 from .models import Product, Category
 from cart.cart import Cart
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
 
@@ -95,4 +96,9 @@ class AdminOrderDetailView(DetailView):
     model = Order
     template_name = 'store/admin_order_detail.html'
     context_object_name = 'order'
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def dashboard_redirect(request):
+    return redirect('admin_orders')
 
